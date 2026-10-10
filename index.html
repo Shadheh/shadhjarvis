@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#08090d" />
+  <meta name="description" content="JARVIS Studio — your personal AI workspace." />
+  <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <title>JARVIS Studio — Your AI workspace</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand-row">
+        <div class="brand-mark"><span></span><span></span><span></span></div>
+        <div class="brand-copy"><span class="brand-name">JARVIS<span class="brand-dot">.</span></span><span class="brand-sub">PERSONAL INTELLIGENCE</span></div>
+        <button class="icon-btn sidebar-close" id="sidebarClose" aria-label="Close sidebar" title="Close sidebar"></button>
+      </div>
+
+      <button class="new-chat-btn" id="newChatBtn"><span class="plus-icon">+</span><span>New conversation</span><kbd>⌘ K</kbd></button>
+      <div class="sidebar-section-label">WORKSPACE</div>
+      <nav class="side-nav">
+        <button class="nav-item active" data-view="chat"><span class="nav-icon" data-icon="message"></span><span>Assistant</span><span class="nav-shortcut">01</span></button>
+        <button class="nav-item" data-tool="notes"><span class="nav-icon" data-icon="note"></span><span>Quick notes</span></button>
+        <button class="nav-item" data-tool="calculator"><span class="nav-icon" data-icon="calculator"></span><span>Calculator</span></button>
+        <button class="nav-item" data-tool="focus"><span class="nav-icon" data-icon="timer"></span><span>Focus session</span></button>
+      </nav>
+
+      <div class="history-heading"><span class="sidebar-section-label">RECENT CHATS</span><button id="clearSearch" class="tiny-icon" title="Search conversations"></button></div>
+      <div class="history-search-wrap" id="historySearchWrap"><input id="historySearch" type="search" placeholder="Search chats…" autocomplete="off" /></div>
+      <div class="chat-history" id="chatHistory"></div>
+      <div class="sidebar-spacer"></div>
+      <div class="sidebar-footer-card">
+        <div class="footer-glow"></div>
+        <div class="plan-line"><span class="status-orb"></span><span>YOUR PERSONAL AI</span><span class="version-chip">v1.0</span></div>
+        <p>Private by design.<br /><span>Your conversations stay on this device.</span></p>
+      </div>
+      <button class="profile-row" id="openSettings">
+        <div class="avatar">S</div><div class="profile-copy"><strong>JARVIS settings</strong><span id="connectionText">Checking connection…</span></div><span class="profile-gear" data-icon="settings"></span>
+      </button>
+    </aside>
+
+    <main class="main-panel">
+      <header class="topbar">
+        <div class="topbar-left"><button id="menuToggle" class="icon-btn mobile-menu" aria-label="Open menu" title="Open menu"></button><div class="breadcrumb"><span>Workspace</span><span class="crumb-slash">/</span><strong id="currentPageName">Assistant</strong></div></div>
+        <div class="topbar-actions">
+          <div class="api-status" id="apiStatus"><span class="status-dot"></span><span>Checking API</span></div>
+          <button class="icon-btn top-icon" id="themeToggle" aria-label="Toggle ambience" title="Toggle accent ambience"></button>
+          <button class="settings-pill" id="topSettings"><span data-icon="settings"></span><span>Settings</span></button>
+        </div>
+      </header>
+
+      <section class="chat-scene" id="chatScene">
+        <div class="welcome-view" id="welcomeView">
+          <div class="hero-eyebrow"><span class="eyebrow-line"></span><span>YOUR AI, REIMAGINED</span><span class="eyebrow-line"></span></div>
+          <div class="hero-orb-wrap"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="hero-orb"><div class="orb-core"></div><div class="orb-shine"></div><div class="orb-cut"></div></div><div class="orb-particle particle-one"></div><div class="orb-particle particle-two"></div><div class="orb-particle particle-three"></div></div>
+          <h1>Good to see you<span class="hero-period">.</span></h1>
+          <p class="hero-subtitle">What can I help you make happen today?</p>
+          <div class="suggestion-grid">
+            <button class="suggestion-card" data-prompt="Help me plan a focused and realistic study session for today."><span class="suggestion-icon violet" data-icon="sparkles"></span><span class="suggestion-text"><strong>Plan my day</strong><small>Turn a busy day into a clear plan</small></span><span class="suggestion-arrow">↗</span></button>
+            <button class="suggestion-card" data-prompt="Explain a difficult topic in a simple way, then quiz me to check my understanding."><span class="suggestion-icon blue" data-icon="book"></span><span class="suggestion-text"><strong>Learn something</strong><small>Understand it, don't just memorize it</small></span><span class="suggestion-arrow">↗</span></button>
+            <button class="suggestion-card" data-prompt="Help me build a polished web app. Start by proposing a clear plan and a minimal working architecture."><span class="suggestion-icon amber" data-icon="code"></span><span class="suggestion-text"><strong>Build an idea</strong><small>Make a concept real, step by step</small></span><span class="suggestion-arrow">↗</span></button>
+            <button class="suggestion-card" data-prompt="Give me a concise briefing on an interesting new technology, with sources if web search is enabled."><span class="suggestion-icon mint" data-icon="compass"></span><span class="suggestion-text"><strong>Explore the web</strong><small>Find context and fresh information</small></span><span class="suggestion-arrow">↗</span></button>
+          </div>
+          <div class="hero-footnote"><span data-icon="shield"></span><span>Your workspace. Your pace. Your intelligence.</span></div>
+        </div>
+        <div class="messages-view hidden" id="messagesView" aria-live="polite"></div>
+      </section>
+
+      <div class="composer-area" id="composerArea">
+        <div class="composer-shell" id="composerShell">
+          <textarea id="promptInput" rows="1" placeholder="Ask JARVIS anything…" aria-label="Message JARVIS"></textarea>
+          <div class="composer-bottom">
+            <div class="composer-tools">
+              <button class="tool-chip" id="webToggle" aria-pressed="false" title="Let JARVIS search the web"><span data-icon="globe"></span><span>Web search</span><span class="toggle-mini"></span></button>
+              <button class="tool-chip voice-tool" id="voiceBtn" title="Dictate a message"><span data-icon="mic"></span><span>Voice</span></button>
+              <span class="tool-separator"></span><span class="composer-hint">Enter to send <span>·</span> Shift + Enter for new line</span>
+            </div>
+            <div class="composer-actions"><span id="charCount" class="char-count">0</span><button class="send-btn" id="sendBtn" aria-label="Send message" title="Send message"><span data-icon="arrow-up"></span></button><button class="stop-btn hidden" id="stopBtn" aria-label="Stop generating" title="Stop generating"><span></span></button></div>
+          </div>
+        </div>
+        <div class="composer-disclaimer">JARVIS can make mistakes. Verify important information. <span class="disclaimer-sep">·</span> API usage may incur charges.</div>
+      </div>
+    </main>
+  </div>
+  <div class="mobile-overlay" id="mobileOverlay"></div>
+
+  <!-- Settings -->
+  <div class="modal-backdrop hidden" id="settingsModal" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+    <div class="modal-card settings-modal">
+      <div class="modal-header"><div><div class="modal-eyebrow">PERSONALIZE YOUR SPACE</div><h2 id="settingsTitle">JARVIS settings</h2></div><button class="icon-btn modal-close" data-close-modal aria-label="Close settings"></button></div>
+      <div class="settings-content">
+        <section class="settings-section"><div class="section-title"><span data-icon="cpu"></span><div><strong>Intelligence</strong><small>Choose the model powering your assistant.</small></div></div>
+          <label class="field-label" for="modelSelect">AI model</label><select id="modelSelect" class="field-control"><option value="gpt-5.5">GPT-5.5 · Most capable</option><option value="gpt-5.4">GPT-5.4 · Advanced</option><option value="gpt-5.4-mini">GPT-5.4 mini · Faster</option><option value="gpt-5.4-nano">GPT-5.4 nano · Lightweight</option></select>
+          <div class="connection-card" id="connectionCard"><span class="connection-indicator"></span><div><strong id="connectionTitle">API key needed</strong><small id="connectionDescription">Add your own OpenAI API key for this browser session.</small></div><button class="text-button" id="refreshStatus">Check</button></div>
+          <label class="field-label" for="apiKeyInput">OpenAI API key</label>
+          <div class="api-key-row"><input id="apiKeyInput" class="field-control" type="password" placeholder="sk-…" autocomplete="off" spellcheck="false"/><button class="secondary-btn" id="toggleApiKey" type="button">Show</button></div>
+          <div class="data-actions api-key-actions"><button class="secondary-btn" id="saveApiKeyBtn" type="button"><span data-icon="shield"></span>Use for this session</button><button class="secondary-btn danger-btn" id="clearApiKeyBtn" type="button">Forget key</button></div>
+          <p class="helper-text">Your key is kept in this tab's session storage and sent directly from your browser to OpenAI. It is not sent to or stored on Vercel. Closing the tab/session clears it. Only use your own key on a device you trust; API usage is billed to your OpenAI API account.</p>
+        </section>
+        <section class="settings-section"><div class="section-title"><span data-icon="sliders"></span><div><strong>How JARVIS responds</strong><small>Personal instructions for future conversations.</small></div></div><label class="field-label" for="systemPrompt">Custom instructions</label><textarea id="systemPrompt" class="field-control field-textarea" rows="4" placeholder="Example: Keep explanations simple, be concise, and use examples…"></textarea><p class="helper-text">Up to 1,800 characters. These instructions are included with API requests.</p></section>
+        <section class="settings-section"><div class="section-title"><span data-icon="database"></span><div><strong>Local data</strong><small>Your history is saved in this browser.</small></div></div><div class="data-actions"><button class="secondary-btn" id="exportAllBtn"><span data-icon="download"></span>Export all chats</button><button class="secondary-btn danger-btn" id="clearAllBtn"><span data-icon="trash"></span>Clear local history</button></div><p class="helper-text">Chats and notes use this browser's local storage. Clearing browser data can remove them.</p></section>
+      </div>
+      <div class="modal-footer"><span class="footer-save-hint" id="settingsSavedHint">Settings are saved on this device.</span><button class="primary-btn" id="saveSettingsBtn">Save changes <span data-icon="check"></span></button></div>
+    </div>
+  </div>
+
+  <!-- Utility panel -->
+  <div class="modal-backdrop hidden" id="utilityModal" role="dialog" aria-modal="true" aria-labelledby="utilityTitle">
+    <div class="modal-card utility-modal"><div class="modal-header"><div><div class="modal-eyebrow">YOUR WORKSPACE</div><h2 id="utilityTitle">Quick notes</h2></div><button class="icon-btn modal-close" data-close-modal aria-label="Close utility"></button></div><div id="utilityContent" class="utility-content"></div></div>
+  </div>
+  <div class="toast-region" id="toastRegion" aria-live="polite" aria-atomic="true"></div>
+  <script src="/app.js"></script>
+  <script>if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) navigator.serviceWorker.register("/sw.js").catch(() => {});</script>
+</body>
+</html>
